@@ -1,6 +1,10 @@
 #!/bin/bash
 
-for BF in $(ls *.blend)
+py_script="$JOLTER_PATH/import_obj.py"
+
+IFS=$'\n'
+for objfile in $(find -type f -name "*.obj")
 do
-    blender -b ${BF} -P pythonfile.py
+    echo blender -P "${py_script}" -b "$(readlink -f ${objfile})"
+    blender -P "${py_script}" -b "$(readlink -f ${objfile})"
 done
